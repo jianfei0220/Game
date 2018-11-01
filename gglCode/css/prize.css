@@ -1,0 +1,108 @@
+#homePage .jumbotron {
+  background-color: rgb(58,66,77);
+  text-align: center;
+  color:white;
+}
+#homePage .userImg{
+	border-radius:50%;
+}
+.queryForm input{
+	width:70%;
+	display: inline-block;
+	height:45px;
+	line-height:45px;
+}
+.queryForm button{
+	width:28%;
+	display: inline-block;
+	height:45px;
+}
+.searchResult .card{
+	border:1px solid #EEEEEE;
+	border-radius:10px;
+}
+.searchResult .card .cardBox{
+	color:white;
+	padding-top:20px;
+	padding-bottom:20px;
+	display:flex;
+}
+.searchResult .card .cardLeft{
+	background:rgb(62,120,219);
+	flex:4;
+	border-top-left-radius:10px;
+	border-bottom-left-radius:10px;
+	text-align:center;
+}
+.searchResult .card .cardRight{
+	flex:1.5;
+	background:rgb(48,108,206);
+	border-top-right-radius:10px;
+	border-bottom-right-radius:10px;
+	text-align: center;
+}
+
+.destroy{
+	margin-top:20px;
+	/*padding-bottom:50px;*/
+}
+.destroy button,.destroy input{
+	width:100%;
+	height:45px;
+	margin:5px 0px;
+}
+/*参与/获奖/领取*/
+.takePart{
+	display: inline-block;
+	border-right:1px solid #eeeeee;
+	padding-right:10px;
+}
+.prizeWinner{
+	display: inline-block;
+	border-right:1px solid #eeeeee;
+	padding-right:10px;
+	padding-left:5px;
+}
+.getPrize{
+	display: inline-block;
+	padding-left:5px;
+}
+.totalNum{
+	font-size:18px;
+}
+/*退出按钮*/
+.logout{
+	position:absolute;
+	right:20px;
+	font-size:14px;
+	border-radius:5px;
+	outline:none;
+	background:rgb(221,221,221);
+}
+.refresh{
+	position:absolute;
+	right:20px;
+	top:80px;
+	font-size:14px;
+	border-radius:5px;
+	outline:none;
+	background:rgb(221,221,221);
+}
+.setBtn{
+	position:absolute;
+	right:20px;
+	top:130px;
+	font-size:14px;
+	border-radius:5px;
+	outline:none;
+	background:rgb(221,221,221);
+}
+/*查询出内容样式*/
+.searchContentBox{
+	display:none;
+	padding-bottom:50px;
+}
+/*查询结果文字*/
+.SRText{
+	margin-top:12px;
+}

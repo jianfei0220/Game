@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
+	<title>线下兑奖</title>
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="js/layer/mobile/need/layer.css"/>
+	<link rel="stylesheet" href="css/prize.css">
+</head>
+<body id="homePage">
+	<div class="userBanner hidden-lg hidden-md" id="app">
+		<div class="jumbotron">
+			<img class="userImg" src="image/head.png">
+			<button class="logout"  @click="logout">退出</button>
+			<button class="refresh" @click="refresh">刷新</button>
+			<button class="setBtn" @click="setPrize" v-if="adminPhone == '965910496'">设置</button>
+		  <h2>{{adminName}}</h2>
+		  <p>{{adminPhone}}</p>
+		  <div class="totalNum">
+		  	<span class="takePart">
+		  		<p>总参与人数</p>
+		  		<p>{{takePartTotal}}</p>
+		  	</span>
+		  	<span class="prizeWinner">
+		  		<p>总获奖人数</p>
+		  		<p>{{prizeTotal}}</p>
+		  	</span>
+		  	<span class="getPrize">
+		  		<p>已领取人数</p>
+		  		<p>{{acceptPrize}}</p>
+		  	</span>
+		  </div>
+		</div>
+		
+		<!--查询表单-->
+		<div class="queryForm container">
+			<input type="text" class="form-control searchCode" placeholder="请输入兑奖码查询">
+			<button type="button" class="btn btn-warning searchBtn" @click="searchClick">查询</button>
+		</div>
+		
+		<div class="searchContentBox">
+			<!--查询结果-->
+			<div class="searchResult container">
+				<p class="SRText">查询结果：</p>
+				<div class="container card">
+					<div class="cardBox">
+			      <div class="cardLeft">
+							<h4>金边刮刮乐活动</h4>
+							<!--<h4>{{prizeName}}</h4>-->
+							<h4 v-if="prizeName == 'tela'">TELA油卡5L</h4>
+							<h4 v-if="prizeName == 'coffee'">Brown Coffee VIP card</h4>
+							<h4 v-if="prizeName == 'ankor'">Ankor 生啤 2杯</h4>
+							<!--<h4 v-if="prizeName == 'pang'">胖達兔原木折扇</h4>-->
+							<h4 v-if="prizeName == 'thanks'">未中奖</h4>
+							<h4>{{userPhone}}</h4>
+							<h5>兑奖期限：2018.10.21 - 2018.11.09</h5>
+			      </div>
+			      <div  class="cardRight">
+							<h4>获奖者</h4>
+							<img src="image/head.png" style="width:50px;border-radius:50%;">
+							<h4>{{userName}}</h4>
+			    	</div>
+					</div>
+					<p>{{status}}</p>
+				</div>
+			</div>
+			
+			<!--核销-->
+			<div class="destroy container">
+				<!--<p>核销备注：</p>
+				<input type="text" class="form-control" placeholder="最多输入9个汉字">-->
+				<button type="button" class="btn btn-warning" @click="destroyClick">立即核销</button>
+			</div>
+		</div>
+	</div>
+<script src="js/jquery.min.js"></script>
+<script src="js/vue.min.js"></script>
+<script src="js/ajax.js"></script>
+<script src="js/common.js"></script>
+<script src="js/layer/layer.js"></script>
+<script src="js/prize.js"></script>
+</body>
+</html>

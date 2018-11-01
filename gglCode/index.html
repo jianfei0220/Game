@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <!--<title>刮刮乐</title>-->
+  <title>Scratching reward</title>
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/common_mobile.css">
+  <link rel="stylesheet" href="css/index.css">
+  <link rel="stylesheet" href="js/layer/mobile/need/layer.css">
+  <link rel="stylesheet" href="css/animate.min.css" />
+  <!-- 移动端适配 -->
+  <script>
+    var html = document.querySelector('html');
+    changeRem();
+    // 事件监听
+    window.addEventListener('resize', changeRem);
+    function changeRem() {
+      var width = html.getBoundingClientRect().width;
+      html.style.fontSize = width / 10 + 'px';
+    }
+  </script>
+</head>
+<style rel="stylesheet">
+#canvas-mask {
+ background-image: url("image/startEN.png");
+}
+#mask-rule .box-rule .activeTitle {
+  line-height: 20px;
+}
+#mask-rule .box-rule .activeContent {
+	margin-bottom:10px;
+}
+</style>
+<body>
+	<!--加载-->
+	<div id="loading">
+    <img src="image/loadding.gif">
+	</div>
+
+	<div id="wrap" style="display: none;">
+		<!--标题-->
+    <img class="GGLtitle animated fadeInDown" src="image/guaTitle.png">
+    <!--游玩区域-->
+    <div class="box">
+      <img src="image/jinnangEN.png" class="ruleIcon animated pulse infinite" style="">
+      <div class="panel">
+        <canvas id="canvas" width="562" height="308"></canvas>
+        <div id="canvas-mask">
+          <a id="btn"></a>
+        </div>
+      </div>
+    </div>
+    <!--游戏规则弹窗-->
+    <div id="mask-rule">
+      <div class="box-rule">
+        <!--<h2 class="activeHeader">活动说明</h2>-->
+        <h2 class="activeHeader">Event Description</h2>
+        <h2 class="activeHeader" style="margin-top:10px;">ការពិពណ៌នាអំពីកម្មវិធី</h2>
+        <span id="close-rule"></span>
+        <div class="con">
+          <div class="text">
+          	<!--<h3 class="activeTitle">活动奖品</h3>-->
+          	<h3 class="activeTitle" style="margin-top:10px;">Activity prizes</h3>
+          	<h3 class="activeTitle">ពានរង្វាន់ព្រឹត្តិការណ៍</h3>
+          	<div class="activeContent">
+          		<p>The prize 1：Angkor draft beer 2 cups</p>
+          		<p>The prize 1：ភេសជ្ជៈស្រាបៀរអង្គរ 2 កែវ</p>
+	            <p>The prize 2：Tela gasoline card	5 liters</p>
+	            <p>The prize 2：ប័ណ្ណចាក់ប្រេងឥន្ធនៈតេលា 5លីត្រ</p>
+	            <p>The prize 3：Brown Coffee VIP card</p>
+	            <p>The prize 3：Brown Coffee VIP card</p>
+	            <!--<p>The prize 4：គូប៉ុងបញ្ចុះតម្លៃ10$ពីហាងកាហ្វេប្រោន</p>
+	            <p>The prize 4：ផ្លិតបត់ផេនដាធូដែលធ្វើអំពីឈើ (មានតំលៃ 15 ដុល្លារ)</p>-->
+          	</div>
+            
+           	<h3 class="activeTitle">activity time</h3>
+           	<h3 class="activeTitle">ពេលវេលាសកម្មភាព</h3>
+           	<div class="activeContent">
+            	<p>2018-10-15 —— 2018-11-14</p>
+            	<p>2018-10-15 —— 2018-11-14</p>
+           	</div>
+           	
+           	<!--<h3 class="activeTitle">领奖地点</h3>-->
+           	<h3 class="activeTitle">Place of receiving prize</h3>
+           	<h3 class="activeTitle">កន្លែងទទួលរង្វាន់</h3>
+           	<div class="activeContent">
+            	<!--<p>金边市森速区1986路大大餐厅斜对面</p>-->
+            	<p>St. 1986, Diagonally opposite to Tay Tay restaurant, Khan Sen Sok, Phnom Penh</p>
+            	<p>ផ្លូវ 1986; ឈៀងទល់មុខនឹងភោជនីយដ្ឋានតាយតាយ; ខណ្ឌសែនសុខ; រាជធានីភ្នំពេញ</p>
+           	</div>
+
+            <!--<h3 class="activeTitle">活动说明</h3>-->
+            <h3 class="activeTitle">Event content:</h3>
+            <h3 class="activeTitle">មាតិកាកម្មវិធី:</h3>
+            <div class="activeContent">
+	            <!--<p>1、在活动期间扫描单二維碼，登记手机与姓名，即可参加刮刮乐抽奖活动，中奖后凭中奖编码、中奖截图、手机号码等相关凭证到活动地点领取奖品。</p>-->
+	            <p>1、Scanning the single QR code and registering the mobile phone and name during the event, you can participate in the scratching lottery. After winning the prize, you can get the prizes at the event site with the relevant documents such as winning code, winning screenshot, mobile phone number and so on.</p>
+	            <p>ស្កេន QR កូដ តែមួយគត់ និងចុះឈ្មោះ និងលេខទូរស័ព្ទរបស់លោកអ្នកក្នុងអំឡុងពេលកម្មវិធី បន្ទាប់មកលោកអ្នកអាចចូលរួមលេងក្នុងកម្មវិធីកោសឆ្នោតរង្វាន់។ បន្ទាប់ពីទទួលបានរង្វាន់ លោកអ្នកអាចមកទទួលរង្វាន់នៅទីតាំងកម្មវិធីតែម្ដងដោយមានឯកសារពាក់ព័ន្ធដូចជា：លេខកូដឈ្នះរង្វាន់；រូបថតឈ្នះរង្វាន់ដែលបានថតពីអេក្រង់ទូរស័ព្ទ；និងលេខទូរស័ព្ទដៃជាដើម។</p>
+	            <!--<p>2、单个手机最多只能参加一次活动，每人活动期间限量领取一份，重复无效。</p>-->
+	            <p>2、A single mobile phone can only participate one-time during the event, and each person is limited to only one prize receiving, repeated winning prize is invalid.</p>
+	            <p>ទូរស័ព្ទមួយ អាចចូលរួមបានតែម្តងប៉ុណ្ណោះក្នុងអំឡុងពេលកម្មវិធី ហើយមនុស្សម្នាក់អាចទទួលបានរង្វាន់តែមួយប៉ុណ្ណោះ។អ្នកដែលឈ្នះរង្វាន់ម្តងហើយ ត្រូវចាត់ទុកជាមោឃៈ ។</p>
+	            <!--<p>3、奖品一经发放概不退换。</p>-->
+	            <p>3、The prizes are not refundable or exchangeable once they are issued.</p>
+	            <p>រង្វាន់មិនត្រូវបានបង្វិលសងវិញឬអាចប្តូរបានទេនៅពេលដែលត្រូវបានបើករួច។</p>
+            </div>
+            
+            <!--<h3 class="activeTitle">免责声明</h3>-->
+            <h3 class="activeTitle">disclaimer</h3>
+            <h3 class="activeTitle">ការបដិសេធ</h3>
+            <div class="activeContent">
+            	<!--<p>活动主办方有权在法律法规允许的范围内修改本活动条款及细则（包括但不限于延迟或提前终止本活动、更换同等价值礼品等）</p>-->
+            	<p>The event organizer reserves the right to amend the terms and conditions of the event (including but not limited to the delay or early termination of the event, replacement of gifts of equal value, and etc.) to the extent permitted by laws and regulations.</p>
+            	<p>អ្នករៀបចំកម្មវិធីសូមរក្សាសិទ្ធិក្នុងការកែប្រែលក្ខខ័ណ្ឌនិងគោលការណ៍នៃកម្មវិធី (រួមបញ្ចូលប៉ុន្តែមិនចំពោះ ការពន្យារពេល ឬការរំសាយកម្មវិធី និងការផ្លាស់ប្តូររង្វាន់ដែលមានតម្លៃស្មើ ។ល។ ) ក្នុងទំហំដែលបានអនុញ្ញាតដោយច្បាប់និងបទបញ្ជា។</p>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+	    
+    <!--中奖提示-->
+    <div id="mask">
+      <div class="blin"></div>
+      <div class="caidai"></div>
+      <div class="winning">
+        <div class="red-head"></div>
+        <div class="red-body"></div>
+        <div id="card">
+          <a href="" target="_self" class="win"></a>
+        </div>
+        <a target="_self" class="btn zoomIn animated" id="viewDetailsBtn"></a>
+        <a target="_self" class="btn zoomIn animated" id="viewDetailsAnNiu"></a>
+        <span id="close"></span>
+      </div>
+    </div>
+    
+    <!--音乐-->
+    <div class="player-button Rotation">
+			<audio id="myAudio" autoplay="autoplay" loop src="GuaGuaLeBg.mp3"  preload="auto"></audio>
+		</div>
+		<!--语言切换图标-->
+		<div class="chIcon">
+			<a href="indexCH.html"><img src="image/ch.png"></a>
+		</div>
+	</div>
+
+	<div class="viewDetails">
+		<!--奖品信息-->
+		<div class="jumbotron awardDetail">
+			<h1 v-if="prizeName == 'tela'">Tela gasoline card	5 liters</h1>
+			<h1 v-if="prizeName == 'coffee'">Brown Coffee VIP card</h1>
+			<h1 v-if="prizeName == 'ankor'">Angkor draft beer 2 cups</h1>
+			<!--<h1 v-if="prizeName == 'pang'">Pandatoo wooden hand fan (worth $15)</h1>-->
+			<h1 v-if="prizeName == 'thanks'">thanks</h1>
+		  <!--<p class="redeemDate">兑奖期限：2018-10-07 —— 2018-10-31</p>-->
+		  <p class="redeemDate">Redemption period:<br> 2018-10-15 —— 2018-11-14</p>
+		  <!--<p class="redeemDate">រយៈពេលប្ដូរយករង្វាន់:2018-10-21 —— 2018-11-09</p>-->
+		</div>
+		
+		
+    <!--分割线-->
+		<div class="partingLine" v-if="prizeName == 'coffee'"></div>
+		<div class="coffeeDetails" v-if="prizeName == 'coffee'">
+			<div class="container">
+				<p>១. ប័ណ្ណវីអាយភីដែលមានទឹកប្រាក់ចំនួន ៥ ដុល្លារ។</p>
+				<p>២. បន្ថែមនូវភេសជ្ជៈមួយកែវ (មិនមានកំនត់លើប្រភេទភេសជ្ជៈណាមួយឡើយ)។</p>
+				<p>៣. អាចជួយសន្សំសំចៃប្រាក់ និងអាចប្រើប្រាស់នៅ Brown Coffee គ្រប់សាខា, កម្មង់ជាភេសជ្ជៈ ឬ បើកជាកាដូផ្សេងៗទៀត។</p>
+			</div>
+		</div>
+		<div class="partingLine" v-if="prizeName == 'coffee'"></div>
+		
+		
+		<!--兑奖码-->
+		<div class="codeBox">
+      <!--<span id="codeName">兑奖手机号:{{prizePhone}}</span>-->
+      <p id="codeName">Redemption phone number:{{prizePhone}}</p>
+      <p id="codeName">លេខទូរស័ព្ទប្ដូរយករង្វាន់:{{prizePhone}}</p>
+      <!--<div class="codeOptInfo">中奖者凭手机号码到活动现场领取奖品</div>-->
+      <div class="codeOptInfo">The winners must claim the prizes at the event site with their phone number.</div>
+      <div class="codeOptInfo">អ្នកឈ្នះរង្វាន់ត្រូវមកប្តូរយករង្វាន់នៅកន្លែងកម្មវិធីជាមួយលេខទូរស័ព្ទរបស់ពួកគេ។</div>
+    </div>
+    
+
+    
+    
+    <!--分割线-->
+		<div class="partingLine"></div>
+		<div class="redeemDetails">
+			<div class="container">
+				<!--<p class="claimTitle">兑奖详情</p>-->
+				<p class="claimTitle">Redemption details</p>
+				<p class="claimTitle">ព័ត៌មានលម្អិតអំពីការប្ដូរយករង្វាន់</p>
+			  <div>
+			  	<!--<span class="claimLabel">有效日期</span> <span class="claimContent">2018-10-07 至 2018-10-31</span>-->
+			  	<span class="claimLabel">Effective date</span> <span class="claimContent">2018-10-15 —— 2018-11-14</span><br />
+			  	<span class="claimLabel">កាលបរិច្ឆេទដែលមានសុពលភាព</span> <span class="claimContent">2018-10-15 —— 2018-11-14</span>
+			  </div>
+			  <div>
+			  	<!--<span class="claimLabel">兑奖地址</span>-->
+			  	<span class="claimLabel">Redemption address</span><br />
+			  	<span class="claimLabel">អាសយដ្ឋានប្ដូរយករង្វាន់</span>
+			  	<div class="claimContent">
+			  		<!--<a href="https://goo.gl/maps/te3vBoXGKY32" style="color:#365899;">金边市堆谷区1986路大大餐厅斜对面</a>-->
+			  		<a href="https://goo.gl/maps/te3vBoXGKY32" style="color:#365899;">St. 1986;  diagonally opposite to Tay Tay restaurant; Khan Sen Sok, Phnom Penh City</a><br />
+			  		<a href="https://goo.gl/maps/te3vBoXGKY32" style="color:#365899;">ផ្លូវ 1986; ឈៀងទល់មុខនឹងភោជនីយដ្ឋានតាយតាយ; ខណ្ឌសែនសុខ; រាជធានីភ្នំពេញ</a>
+			  	</div>
+			  </div>
+			  <div>
+			  	<!--<span class="claimLabel">兑奖须知</span> <span class="claimContent">一个电话号码及一张金卡仅能对奖一次，对奖时需将金卡缴回售楼中心</span>-->
+			  	<span class="claimLabel">Redemption Note:</span> <span class="claimContent">A phone number and a gold card can only get the reward once time , and the gold card must be returned to the sales center for the prize.</span><br />
+			  	<span class="claimLabel">ចំណាំនៃការប្តូរយករង្វាន់:</span> <span class="claimContent">លេខទូរស័ព្ទមួយនិងកាតមាសមួយអាចត្រូវបានប្តូររង្វង់ជូនតែម្តងគត់ហើយកាតមាសត្រូវតែប្រគល់មកឱ្យការិយាល័យផ្នែកលក់វិញដើម្បីទទួលបានរង្វាន់។</span>
+			  </div>
+			</div>
+		</div>
+    <!--分割线-->
+		<div class="partingLine"></div>
+		<div class="contact">
+			<div class="container">
+			  <div>
+			  	<!--<span>联系电话</span> <span>023 231 868</span>-->
+			  	<span>Contact number</span> <span>023 231 868</span><br />
+			  	<span>លេខទំនាក់ទំនង</span> <span>023 231 868</span>
+			  </div>
+			  <div class="followUs">
+			  	<!--<p class="followUsText">关注我们</p>-->
+			  	<p class="followUsText">Follow us</p>
+			  	<p class="followUsText">ទំនាក់ទំនងយើងខ្ញុំតាមរយ</p>			  	
+			  	<a href="https://www.facebook.com/vhousepandatoo"><img class="followUsImg" src="image/QR.png"></a>
+			  </div>
+			</div>
+			<button class="goIndex" @click="goBack">Return</button>
+		</div>
+		
+
+	</div>
+<script src="js/jquery.min.js"></script>
+<script src="js/vue.min.js"></script>
+<script src="js/layer/mobile/layer.js"></script>
+<script src="js/ajax.js"></script>
+<script src="js/common.js"></script>
+<script src="js/index.js"></script>
+<script type="text/javascript">
+	//loading
+	document.onreadystatechange = loading; 
+	function loading(){
+		if(document.readyState == "complete"){
+			$("#loading").hide();
+			$("#wrap").show();
+		}
+	}
+	
+	var viewDetails = new Vue({
+		el:'.viewDetails',
+	  data: {
+			prizePhone:'',
+			prizeName:''
+	  },
+	  created:function(){
+			this.getlocal();
+	  },
+	  methods:{
+			goBack:function(){
+				$('.viewDetails').hide();
+			},
+			getlocal:function(){
+		  	this.prizePhone = localStorage.prizePhone;
+		  	this.prizeName = localStorage.prizeName;
+			}
+	  }
+	})
+	
+	
+</script>
+
+</body>
+</html>

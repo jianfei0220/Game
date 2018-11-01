@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>奖项设置</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
+  <link rel="stylesheet" href="css/element-ui.css">
+  <link rel="stylesheet" href="js/layer/mobile/need/layer.css">
+</head>
+<body>
+<div id="editPrize">
+		<!--头部-->
+		<div class="headBox">
+			<img class="headImg" src="image/head.png">
+			<h3>奖项设置</h3>
+			<button class="goBack" @click="goBackPrize">返回</button>
+		</div>
+		<!--新增-->
+    <div class="addBox">
+    	<el-input  type="text" class="addPrizeName"   placeholder="请输入奖品名"  v-model="addPrizeName" minlength='2' @keyup.native="removeSpace"></el-input>
+    	<el-input  type="text" class="addPrizeNumber" placeholder="请输入奖品数量" v-model="addPrizeNumber" maxlength="3" @keyup.native="prizeNumber"></el-input>
+    	<el-button type="primary" @click="addRow()">新增</el-button>
+    </div>
+    <!--设置百分比-->
+    <div class="setPercent">
+    	<label>设置中奖率</label>
+    	<el-input v-model="totalWin" class="percentValue" style="width:30%" :disabled="inputDisabled" @keyup.native="number"></el-input>
+    	<el-button type="primary" @click="editPercent">编辑</el-button>
+    	<el-button type="primary" @click="revisionClick">提交</el-button>
+    </div>
+
+    <div id="tb">
+      <el-table :data="tableData" ref="table" tooltip-effect="dark" border>
+        <el-table-column label="序号"  type="index" width="50" align="center"></el-table-column>
+        <el-table-column prop="groupName" label="奖品名" align="center"></el-table-column>
+				<el-table-column prop="total" label="现有数量" align="center"></el-table-column>
+				
+        <el-table-column label="增减值" align="center" >
+          <template slot-scope="scope">
+            <input type="text" class="addMinusInput" v-model="scope.row.quantity" disabled="true">
+          </template>
+        </el-table-column>
+
+				<el-table-column label="操作" align="center">
+		      <template slot-scope="scope">
+		        <el-button class="editAddBtn" size="mini" @click="handleEdit(scope.$index, scope.row)"   type="primary">编辑</el-button>
+		        <el-button class="submitAddBtn" size="mini" @click="handleSubmit(scope.$index, scope.row)" type="danger">提交</el-button>
+		      </template>
+		   </el-table-column>
+      </el-table>
+    </div>
+  </div>
+</body>
+	<script src="js/jquery.min.js"></script>
+  <script src="js/vue.min.js"></script>
+  <script src="js/element-ui.js"></script>
+  <script src="js/layer/layer.js"></script>
+  <script src="js/ajax.js"></script>
+  <script src="js/common.js"></script>
+  <script>
+    new Vue({
+      el: '#editPrize',
+      data: function() {
+		    return {
+	        tableData: [],
+	        totalWin:'0',						// 总中奖率
+	        inputDisabled:true,			// 百分比input禁止状态
+	        addPrizeName:'',				// 奖品名
+	        addPrizeNumber:'',			// 奖品数量
+	        addPrezeStatus:true			// 增减值编辑状态
+		    }
+      },
+			created(){
+				if(localStorage.tokenStr != undefined){
+			  	// 判断是否存在token
+					this.searchToken();
+				}else{
+					window.location.href="login.html";
+				}
+				
+				this.getData();
+			},
+ 			methods: {
+		  	// 验证token
+		  	searchToken:function(){
+					AjaxGet("user/get/verificationcode/token",
+					function(data){
+						console.log('验证token！',data);
+						if(data.code != 200){
+							window.location.href="login.html";
+						}
+					})
+		  	},
+ 				// 百分比值：正整数且小于100
+ 				number(){　
+　　　			this.totalWin = this.totalWin.replace(/[^\.\d]/g,'');
+          this.totalWin = this.totalWin.replace('.','');
+          
+          if(this.totalWin>100){
+       			this.totalWin = 100;
+					}
+　　			},
+				// 奖品数量格式 （正整数）
+				prizeNumber(){
+					this.addPrizeNumber = this.addPrizeNumber.replace(/[^\.\d]/g,'');
+          this.addPrizeNumber = this.addPrizeNumber.replace('.','');
+				},
+				// 奖品名 去除左边空格
+				removeSpace(){
+					this.addPrizeName = this.addPrizeName.replace(/^\s+/,'');
+					// this.addPrizeName = this.addPrizeName.replace(/\s+$/,'');
+				},
+ 				// 请求数据
+ 				getData:function(){
+					var self = this;
+					// 获取表格数据
+					AjaxGet('user/get/prize/surplus',
+						function(data){
+							console.log('获取奖品列表',data);
+							if(data.code == 10001){
+								layer.msg('暂无数据！',{time:1000});
+							}else if(data.code == 200){
+								// 不显示空奖数据
+								for(var i=0; i<data.data.length;i++){
+									if(data.data[i].groupName != 'thanks'){
+										self.tableData.push(data.data[i]);
+									}
+								}
+							}
+						}
+					)
+					
+					// 获取百分比
+					AjaxPost('user/winning/100/get/c',null,
+						function(data){
+				    	console.log('获取百分比',data);
+				    	if(data.code == 200){
+					    	self.totalWin = data.data;
+				    	}else if(data.code == 10001){
+				    		self.totalWin = 0;
+				    	}
+				    }
+					)
+				},
+	     	// 新增行
+				addRow:function(){
+					var self = this;
+					if(self.addPrizeName == '' || self.addPrizeNumber == ''){
+						layer.msg('新增值不能为空！',{time:1000});
+					}else{
+						AjaxPost('user/set/amount',
+							JSON.stringify([{
+					    	"goods":self.addPrizeName,
+					    	"quantity":self.addPrizeNumber
+					    }]),
+							function(data){
+					    	console.log('新增奖品',data);
+					    	self.tableData = [];
+					    	self.getData();
+					    	layer.msg('新增成功！',{time:1000});
+				    		// 清空表单数据
+								self.addPrizeName   = '';
+								self.addPrizeNumber = '';
+					    }
+					  )
+					}
+				},
+				// 表格编辑
+	      handleEdit(index,row) {
+	        // 取消增减值input的禁止状态	      	
+	        $('#tb .el-table__row').eq(index).find('input').removeAttr("disabled");
+	        this.addPrezeStatus = false;		// 点击编辑后可提交
+	      },
+	      // 增减值提交
+	      handleSubmit(index,row) {
+	        var self = this;
+	        // 未点击编辑时不可提交
+	        if(self.addPrezeStatus == false){
+						// 增加增减值input的禁止状态	        
+		        $('#tb .el-table__row').eq(index).find('input').attr("disabled",'true');
+		        // 更改状态 未点击编辑 不可提交
+					  self.addPrezeStatus = true;
+					  
+				  	AjaxPost('user/set/amount',
+					  	JSON.stringify([{
+					    	"goods":row.groupName,
+					    	"quantity":row.quantity
+					    }]),
+							function(data){
+					    	console.log('增减值',data);
+					    	// 先清空数据
+					    	self.tableData = [];
+					    	self.getData();
+				    	}
+				  	)
+	        }
+	     	},
+				// 编辑百分比
+				editPercent:function(){
+					// 取消input禁用
+					this.inputDisabled = false;
+					// 点击编辑按钮 删除%符号
+					this.totalWin = this.totalWin.replace(/[^\.\d]/g,'');
+          this.totalWin = this.totalWin.replace('.','');
+				},
+				// 提交百分比
+				revisionClick:function(){
+					var self = this;
+					if(self.inputDisabled == false){
+						if(self.totalWin == ''){
+							layer.msg('中奖率不能为空！');
+						}else{
+							// 禁用input
+							self.inputDisabled = true;
+
+							AjaxPost("user/winning/" + self.totalWin + "/get/a",null,
+								function(data){
+						    	console.log('提交百分比',data);
+						    	self.tableData = [];
+						    	self.getData();
+						    	layer.msg('百分比设置成功！',{time:1000});
+						    }
+							)
+						}
+					}
+				},
+				goBackPrize:function(){
+					window.location.href = 'prize.html';
+				}
+
+    	}
+    })
+  </script>
+</html>
+
+<style type="text/css">
+*{
+	margin:0;
+	padding:0;
+}
+body,html{
+	width:100%;
+}
+#editPrize{
+	width:100%;
+}
+/*头部*/
+.headBox{
+	width:100%;
+	height:200px;
+	color:white;
+	padding-top:30px;
+	text-align: center;
+	background-color: rgb(58,66,77);
+}
+.headBox .headImg{
+	border-radius:50%;
+	margin-bottom:10px;
+}
+.headBox .goBack{
+	position:absolute;
+	top:15px;
+	right:15px;
+	border:none;
+	padding:4px 8px;
+	border-radius:3px;
+	background: rgb(221,221,221);
+	font-size:14px;
+}
+/*新增*/
+.addBox{
+	width:100%;
+	padding:10px 0px;
+	text-align: center;
+}
+.addBox .addPrizeName,.addBox .addPrizeNumber{
+	width:35%;
+	height:40px;
+	font-size:14px;
+}
+/*编辑/提交按钮*/
+.editAddBtn{
+	margin-bottom:10px;
+}
+.submitAddBtn{
+	margin-left:0!important;
+}
+/*设置百分比*/
+.setPercent{
+	text-align: center;
+	margin-bottom:15px;
+}
+/*表格*/
+#tb{
+	width:100%;
+}
+#tb .addMinusInput{
+	width:40px;
+	height:30px;
+	text-align: center;
+}
+</style>

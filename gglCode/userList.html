@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" href="plug/datatable/jquery.dataTables.min.css">
+		<link rel="stylesheet" href="plug/datatable/buttons.dataTables.min.css">
+	</head>
+	<body>
+		<div id="userList">
+			<h2 style="text-align: center;">信息列表</h2>
+			<table id="userTable" class="display">
+				<thead>
+	        <tr>
+	          <th>中奖玩家</th>
+	          <th>联系电话</th>
+	          <th>中奖时间</th>
+	          <th>领奖时间</th>
+	          <th>奖品</th>
+	          <th>卡券状态</th>
+	        </tr>
+		    </thead>
+		  </table>
+		</div>
+	</body>
+<script src="js/jquery.min.js"></script>
+<script src="js/ajax.js"></script>
+<script src="plug/datatable/jquery.dataTables.min.js"></script>
+<script src="plug/datatable/dataTables.buttons.min.js"></script>
+<script src="plug/datatable/jszip.min.js"></script>
+<script src="plug/datatable/buttons.html5.min.js"></script>
+<script>
+	$(document).ready( function() {
+		// 数据请求
+		AjaxGet('user/get/winning/list',
+			function(data){
+				dataTableInit(data.data)
+			}
+		)
+		
+		// dataTable
+		function dataTableInit(data){
+			// 表格初始化
+	    $('#userTable').DataTable({
+	      dom: 'Bfrtipl',
+	      autoWidth: false,        						// 默认true,是否自动计算表格各列宽度
+				iDisplayLength: 20,									// 默认每页显示的行数 
+				aLengthMenu: [20, 40, 100], 				// 更改显示记录数选项
+				order: [[ 2, "desc" ]],							// 第三列默认倒序排列
+				data:data,
+	      columns:[
+	        {"data": "userName"},
+	        {"data": "userPhone"},
+	        {"data": "winningTime"},
+	        {"data": "acquisitionTime"},
+	        {"data": "prizeName"},
+	        {"data": "status"}
+	      ],
+	      // 导出
+				buttons:[
+          {
+          	extend:'excel',
+          	text: '导出'
+          } 
+      	],
+				language: {
+				  sProcessing: "处理中...",
+	        sLengthMenu: "显示 _MENU_ 项结果",
+	        sZeroRecords: "没有匹配结果",
+	        sInfo: "第 _PAGE_ 页 ( 总共 _PAGES_ 页 )",
+	        sInfoEmpty: "显示第 0 至 0 项结果，共 0 项",
+	        sInfoFiltered: "(由 _MAX_ 项结果过滤)",
+	        sInfoPostFix: "",
+	        sSearch: "搜索:",
+	        sUrl: "",
+	        sEmptyTable: "表中数据为空",
+	        sLoadingRecords: "载入中...",
+	        sInfoThousands: ",",
+	        oPaginate: {
+            sFirst: "首页",
+            sPrevious: "上页",
+            sNext: "下页",
+            sLast: "末页"
+	        },
+	        oAria: {
+            sSortAscending: ": 以升序排列此列",
+            sSortDescending: ": 以降序排列此列"
+	        }
+		    },
+				columnDefs: [
+					{
+	          render:function(data, type, row) {
+	          	if(data == 0){
+	          		data = '未领取';
+	          	}else if(data == 1){
+	          		data = '已领取';
+	          	}else if(data == 2){
+	          		data = '未中奖';
+	          	}
+	            return data;
+	          },
+	          targets: 5
+	      	},
+	      	{
+	          render:function(data, type, row) {
+	          	if(data == 'ankor'){
+	          		data = 'Ankor生啤2杯';
+	          	}else if(data == 'tela'){
+	          		data = 'TELA油卡 5L';
+	          	}else if(data == 'coffee'){
+	          		data = 'Brown Coffee VIP card';
+	          	}
+//	          	else if(data == 'pang'){
+//	          		data = '胖達兔原木折扇(價值15美金)';
+//	          	}
+	            return data;
+	          },
+	          targets: 4
+	      	}
+				]
+	    });
+		}
+	})
+</script>
+</html>
+<style>
+/*表格*/
+#userTable{
+	border:1px solid #ebebeb;
+	text-align: center;
+}
+#userTable thead th{
+	border-bottom:1px solid #ebebeb;
+	border-right:1px solid #ebebeb;
+}
+#userTable tbody td{
+	border-right:1px solid #ebebeb;
+}
+/*导出按钮样式*/
+.buttons-excel{
+	border-radius:5px!important;
+	background: #409eff!important;
+	border-color: #409eff!important;
+	color:white!important;
+}
+#userTable_wrapper .dt-buttons{
+	left:10px;
+}
+/*搜索输入框样式*/
+#userTable_filter{
+	margin-right:12px;
+}
+#userTable_filter input{
+	border: 1px solid #dcdfe6;
+	border-radius: 4px;
+	height: 30px;
+  line-height: 30px;
+}
+#userTable_info{
+	margin-left:12px;
+}
+
+#userTable_length{
+	margin-top:12px;
+	margin-left:10px;
+}
+/*分页*/
+#userTable_paginate{
+	margin-top:10px;
+}
+.paginate_button {
+	padding: 0.3em 0.6em!important;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button.current, 
+.dataTables_wrapper .dataTables_paginate .paginate_button.current:hover{
+	background:#409eff;
+	border-color: #409eff!important;
+	color:#ffffff!important;
+}
+</style>

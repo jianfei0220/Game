@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>刮刮乐</title>
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/common_mobile.css">
+  <link rel="stylesheet" href="css/index.css">
+  <link rel="stylesheet" href="js/layer/mobile/need/layer.css">
+  <link rel="stylesheet" href="css/animate.min.css">
+  <!-- 移动端适配 -->
+  <script>
+    var html = document.querySelector('html');
+    changeRem();
+    // 事件监听
+    window.addEventListener('resize', changeRem);
+    function changeRem() {
+      var width = html.getBoundingClientRect().width;
+      html.style.fontSize = width / 10 + 'px';
+    }
+  </script>
+</head>
+<body>
+	<!--加载-->
+	<div id="loading">
+    <img src="image/loadding.gif">
+	</div>
+
+	<div id="wrap" style="display: none;">
+		<!--标题-->
+    <img class="GGLtitle animated fadeInDown" src="image/guaTitle.png">
+    <!--游玩区域-->
+    <div class="box">
+      <img src="image/jinnang.png" class="ruleIcon animated pulse infinite">
+      <div class="panel">
+        <canvas id="canvas" width="562" height="308"></canvas>
+        <div id="canvas-mask">
+          <a id="btn"></a>
+        </div>
+      </div>
+    </div>
+    <!--游戏规则弹窗-->
+    <div id="mask-rule">
+      <div class="box-rule">
+        <h2 class="activeHeader">活动说明</h2>
+        <span id="close-rule"></span>
+        <div class="con">
+          <div class="text">
+          	<h3 class="activeTitle">活动奖品</h3>
+          	<div class="activeContent">
+          		<p>奖品1：Ankor生啤2杯</p>
+	            <p>奖品2：TELA油卡 5L</p>
+	            <p>奖品3：Brown Coffee VIP card</p>
+	            <!--<p>奖品4：胖达兔原木折扇(价值15美金)</p>-->
+          	</div>
+            
+           	<h3 class="activeTitle">活动时间</h3>
+           	<div class="activeContent">
+            	<p>2018-10-15 —— 2018-11-14</p>
+           	</div>
+           	
+           	<h3 class="activeTitle">领奖地点</h3>
+           	<div class="activeContent">
+            	<p>金边市森速区1986路大大餐厅斜对面</p>
+           	</div>
+
+            <h3 class="activeTitle">活动说明</h3>
+            <div class="activeContent">
+	            <p>1、在活动期间扫描单二維碼，登记手机与姓名，即可参加刮刮乐抽奖活动，中奖后凭中奖编码、中奖截图、手机号码等相关凭证到活动地点领取奖品。</p>
+	            <p>2、单个手机最多只能参加一次活动，每人活动期间限量领取一份，重复无效。</p>
+	            <p>3、奖品一经发放概不退换。</p>
+            </div>
+            
+            <h3 class="activeTitle">免责声明</h3>
+            <div class="activeContent">
+            	<p>活动主办方有权在法律法规允许的范围内修改本活动条款及细则（包括但不限于延迟或提前终止本活动、更换同等价值礼品等）</p>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+	    
+    <!--中奖提示-->
+    <div id="mask">
+      <div class="blin"></div>
+      <div class="caidai"></div>
+      <div class="winning">
+        <div class="red-head"></div>
+        <div class="red-body"></div>
+        <div id="card">
+          <a href="" target="_self" class="win"></a>
+        </div>
+        <a target="_self" class="btn zoomIn animated" id="viewDetailsBtn"></a>
+        <a target="_self" class="btn zoomIn animated" id="viewDetailsAnNiu"></a>
+        <span id="close"></span>
+      </div>
+    </div>
+    
+    <!--音乐-->
+    <div class="player-button Rotation">
+			<audio id="myAudio" autoplay="autoplay" loop src="GuaGuaLeBg.mp3"  preload="auto"></audio>
+		</div>
+		<!--语言切换图标-->
+		<div class="chIcon">
+			<a href="index.html"><img src="image/en.png"></a>
+		</div>
+	</div>
+
+	<div class="viewDetails">
+		<!--奖品信息-->
+		<div class="jumbotron awardDetail">
+			<h1 v-if="prizeName == 'tela'">TELA油卡5L</h1>
+			<h1 v-if="prizeName == 'coffee'">Brown Coffee VIP card</h1>
+			<h1 v-if="prizeName == 'ankor'">Ankor 生啤 2杯</h1>
+			<!--<h1 v-if="prizeName == 'pang'">胖達兔原木折扇</h1>-->
+			<h1 v-if="prizeName == 'thanks'">未中奖</h1>
+		  <p class="redeemDate">兑奖期限：2018-10-15 —— 2018-11-14</p>
+		</div>
+		
+		<!--兑奖码-->
+		<div class="codeBox">
+      <span id="codeName">兑奖手机号:{{prizePhone}}</span>
+      <div class="codeOptInfo">中奖者凭手机号码到活动现场领取奖品</div>
+    </div>
+    
+    <!--分割线-->
+		<div class="partingLine" v-if="prizeName == 'coffee'"></div>
+		<div class="coffeeDetails" v-if="prizeName == 'coffee'">
+			<div class="container">
+				<p>1.VIP卡内有5元美金可使用。</p>
+				<p>2.再加送一杯小杯饮料（不限制饮料品种）。</p>
+				<p>3.可存钱于卡中使用于Brown Coffee 任何店 、集点送饮料或其他礼品。</p>
+			</div>
+		</div>
+
+    <!--分割线-->
+		<div class="partingLine"></div>
+		<div class="redeemDetails">
+			<div class="container">
+				<p class="claimTitle">兑奖详情</p>
+			  <div>
+			  	<span class="claimLabel">有效日期</span> <span class="claimContent">2018-10-15 至 2018-11-14</span>
+			  </div>
+			  <div>
+			  	<span class="claimLabel">兑奖地址</span> 
+			  	<span class="claimContent">
+			  		<a href="https://goo.gl/maps/te3vBoXGKY32" style="color:#365899;">金边市堆谷区1986路大大餐厅斜对面</a>
+			  	</span>
+			  </div>
+			  <div>
+			  	<span class="claimLabel">兑奖须知</span> <span class="claimContent">一个电话号码及一张金卡仅能对奖一次，对奖时需将金卡缴回售楼中心</span>
+			  </div>
+			</div>
+		</div>
+    <!--分割线-->
+		<div class="partingLine"></div>
+		<div class="contact">
+			<div class="container">
+			  <div>
+			  	<span>联系电话</span> <span>023 231 868</span>
+			  </div>
+			  <div class="followUs">
+			  	<p class="followUsText">关注我们</p>
+			  	<a href="https://www.facebook.com/vhousepandatoo"><img class="followUsImg" src="image/QR.png"></a>
+			  </div>
+			</div>
+			<button class="goIndex" @click="goBack">返回首页</button>
+		</div>
+	</div>
+<script src="js/jquery.min.js"></script>
+<script src="js/vue.min.js"></script>
+<script src="js/layer/mobile/layer.js"></script>
+<script src="js/ajax.js"></script>
+<script src="js/commonCH.js"></script>
+<script src="js/indexCH.js"></script>
+<script type="text/javascript">
+	//loading
+	document.onreadystatechange = loading; 
+	function loading(){
+		if(document.readyState == "complete"){
+			$("#loading").hide();
+			$("#wrap").show();
+		}
+	}
+	
+	var viewDetails = new Vue({
+	  el: '.viewDetails',
+	  data: {
+			prizePhone:'',
+			prizeName:''
+	  },
+	  created:function(){
+			this.getlocal();
+	  },
+	  methods:{
+			goBack:function(){
+				$('.viewDetails').hide();
+			},
+			getlocal:function(){
+		  	this.prizePhone = localStorage.prizePhone;
+		  	this.prizeName = localStorage.prizeName;
+			}
+	  }
+	})
+</script>
+</body>
+</html>
